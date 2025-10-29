@@ -57,6 +57,9 @@ const theme = extendTheme({
     }
   },
 
+  cssVarPrefix: 'app',
+  colorSchemeSelector: 'data-mode',
+
   // ==============================
   // Typography
   // ==============================

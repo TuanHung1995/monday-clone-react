@@ -1,9 +1,13 @@
-import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
+import ModeSelect from './components/ModeSelect/ModeSelect'
 
 function App() {
   return (
     <>
-      <Button variant="contained">Hello world</Button>
+      <Box display="flex" alignItems="center" gap={1.5}>
+        <Box>Logo</Box>
+        <ModeSelect />
+      </Box>
     </>
   )
 }
