@@ -28,9 +28,14 @@
     "baseUrl": "src",
     "paths": {
       "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
       "@hooks/*": ["hooks/*"],
+      "@store/*": ["store/*"],
+      "@services/*": ["services/*"],
+      "@theme/*": ["theme/*"],
       "@utils/*": ["utils/*"],
-      "@pages/*": ["pages/*"]
+      "@types/*": ["types/*"],
+      "@layouts/*": ["layouts/*"],
     }
   },
   "include": ["src"]
