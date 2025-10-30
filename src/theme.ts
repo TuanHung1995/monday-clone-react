@@ -85,7 +85,7 @@ const theme = extendTheme({
       styleOverrides: {
         body: {
           fontFamily: 'Inter, sans-serif',
-          backgroundColor: '#F6F9FB',
+          // backgroundColor: '#F6F9FB',
           color: '#1F1F1F',
           '*::-webkit-scrollbar': {
             width: '8px',
