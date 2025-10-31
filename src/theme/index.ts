@@ -6,14 +6,14 @@ import { themeComponents } from './components'
 // ==============================
 // Layout constants
 // ==============================
-const APP_BAR_HEIGHT = '60px'
-const BOARD_BAR_HEIGHT = '64px'
-const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT})`
-const COLUMN_HEADER_HEIGHT = '48px'
-const COLUMN_FOOTER_HEIGHT = '56px'
+// const APP_BAR_HEIGHT = '60px'
+// const BOARD_BAR_HEIGHT = '64px'
+// const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT})`
+// const COLUMN_HEADER_HEIGHT = '48px'
+// const COLUMN_FOOTER_HEIGHT = '56px'
 
 // ==============================
-// Custom theme for Monday clone
+// Custom theme
 // ==============================
 const theme = extendTheme({
   // monday: {
@@ -50,7 +50,6 @@ const theme = extendTheme({
     body1: { fontSize: '0.9375rem' },
     body2: { fontSize: '0.875rem', color: '#5F6C80' },
     button: { textTransform: 'none', fontWeight: 500 }
-    // (...typography as any )
   },
 
   shape: {

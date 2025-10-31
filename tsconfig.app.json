@@ -36,6 +36,7 @@
       "@utils/*": ["utils/*"],
       "@types/*": ["types/*"],
       "@layouts/*": ["layouts/*"],
+      "@routes/*": ["routes/*"]
     }
   },
   "include": ["src"]
