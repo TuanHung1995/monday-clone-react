@@ -1,14 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import AppLayout from "../layouts/AppLayout";
+import { Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "@pages/Home";
 
 const AppRouter = () => (
-  <BrowserRouter>
-    <AppLayout>
       <Routes>
         <Route path="/" element={<Navigate to="/my-work" />} />
+        <Route path="/home" element={<HomePage />} />
       </Routes>
-    </AppLayout>
-  </BrowserRouter>
 );
 
 export default AppRouter;
