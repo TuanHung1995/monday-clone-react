@@ -4,10 +4,10 @@ import NavBar from "@components/navigation/NavBar";
 import SideBar from "@components/navigation/SideBar";
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <Box sx={{ display: "flex" }}>
-    <SideBar />
-    <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
-      <NavBar />
+  <Box sx={{ height: "100vh"}}>
+    <NavBar />
+    <Box sx={{display: "flex", height: "calc(100vh - 64px)"}}>
+      <SideBar />
       <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
         {children}
       </Box>

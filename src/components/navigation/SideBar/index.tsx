@@ -1,76 +1,54 @@
+import { Box } from "@mui/material";
+import SidebarHeader from "./Header";
+import SidebarSection from "./Sections";
+import WorkspaceItem from "./WorkspaceItems";
+import NavItem from "./NavItems";
 import {
-  Drawer,
-  Box,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
-import GroupIcon from "@mui/icons-material/Group";
-import AddIcon from "@mui/icons-material/Add";
-
-const drawerWidth = 260;
+  Folder,
+  Bug,
+  LayoutDashboard,
+  Users,
+  Plus,
+  Search,
+  MoreHorizontal,
+} from "lucide-react";
 
 const Sidebar = () => {
-  const theme = useTheme();
-
-  const navItems = [
-    { label: "My Work", icon: <AssignmentTurnedInIcon />, path: "/my-work" },
-    { label: "Boards", icon: <DashboardIcon />, path: "/boards" },
-    { label: "Teams", icon: <GroupIcon />, path: "/teams" },
-  ];
-
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
-          width: drawerWidth,
-          boxSizing: "border-box",
-          borderRight: `1px solid ${theme.palette.divider}`,
-          backgroundColor: theme.palette.background.paper,
-        },
-      }}
+    <Box
+      className="flex flex-col h-screen w-64 bg-[#121b33] text-gray-300 py-3 px-2"
+      sx={{ borderRight: "1px solid rgba(255,255,255,0.05)" }}
     >
-      {/* Workspace Section */}
-      <Box sx={{ p: 2, borderBottom: `1px solid ${theme.palette.divider}` }}>
-        <Typography variant="subtitle1" fontWeight={600}>
-          My Workspace
-        </Typography>
-      </Box>
+      {/* Header */}
+      <SidebarHeader />
 
-      {/* Navigation */}
-      <List>
-        {navItems.map((item) => (
-          <ListItemButton key={item.label}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText
-              primary={
-                <Typography fontWeight={500} fontSize={14}>
-                  {item.label}
-                </Typography>
-              }
-            />
-          </ListItemButton>
-        ))}
-      </List>
+      {/* Favorites Section */}
+      <SidebarSection title="Favorites" />
 
-      {/* Bottom Create Section */}
-      <Box sx={{ mt: "auto", p: 2 }}>
-        <ListItemButton sx={{ border: `1px solid ${theme.palette.divider}`, borderRadius: 1 }}>
-          <ListItemIcon>
-            <AddIcon />
-          </ListItemIcon>
-          <ListItemText primary="New Board" />
-        </ListItemButton>
-      </Box>
-    </Drawer>
+      {/* Workspaces */}
+      <SidebarSection title="Workspaces">
+        <div className="flex items-center justify-between px-2 py-1 mt-1">
+          <WorkspaceItem name="Kanban Team" color="bg-pink-500" />
+          <div className="flex gap-2">
+            <Search size={16} className="cursor-pointer text-gray-400" />
+            <MoreHorizontal size={16} className="cursor-pointer text-gray-400" />
+            <Plus size={16} className="cursor-pointer text-gray-400" />
+          </div>
+        </div>
+
+        {/* Boards */}
+        <div className="ml-6 mt-2 flex flex-col gap-1">
+          <NavItem icon={<LayoutDashboard size={16} />} label="Tasks" />
+          <NavItem icon={<Folder size={16} />} label="Epics" />
+          <NavItem icon={<Bug size={16} />} label="Bugs Queue" />
+          <NavItem icon={<LayoutDashboard size={16} />} label="New Board" />
+        </div>
+
+        <div className="ml-4 mt-3">
+          <NavItem icon={<Users size={16} />} label="My team" collapsible />
+        </div>
+      </SidebarSection>
+    </Box>
   );
 };
 

@@ -1,0 +1,4 @@
+const NAV_BAR_HEIGHT = 64;
+const SIDE_BAR_WIDTH = 260;
+
+export { NAV_BAR_HEIGHT, SIDE_BAR_WIDTH };
