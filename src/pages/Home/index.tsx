@@ -1,7 +1,7 @@
 import HomeHeader from "./HomeHeader";
 import RecentViewed from "./RecentViewed";
 
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
 import { NAV_BAR_HEIGHT } from "@utils/constants";
 

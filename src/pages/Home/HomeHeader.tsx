@@ -1,10 +1,8 @@
-import { FC } from "react";
-
 interface HomeHeaderProps {
   username: string;
 }
 
-const HomeHeader: FC<HomeHeaderProps> = ({ username }) => {
+const HomeHeader= ({ username }: HomeHeaderProps) => {
   return (
     <div className="h-[75px] flex justify-between items-center px-6 border-b-2 border-[#4b4e69]">
       <div>
