@@ -1,6 +1,6 @@
 export const MuiCssBaseline = {
     body: {
-          fontFamily: 'Inter, sans-serif',
+          fontFamily: 'Figtree, Roboto, Noto Sans Hebrew, Noto Kufi Arabic, Noto Sans JP, sans-serif',
           // backgroundColor: '#F6F9FB',
           color: '#1F1F1F',
           '*::-webkit-scrollbar': {

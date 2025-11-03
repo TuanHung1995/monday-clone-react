@@ -43,7 +43,7 @@ const theme = extendTheme({
   // Typography
   // ==============================
   typography: {
-    fontFamily: 'Inter, Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: 'Figtree, Roboto, Noto Sans Hebrew, Noto Kufi Arabic, Noto Sans JP, sans-serif',
     h1: { fontSize: '2rem', fontWeight: 600 },
     h2: { fontSize: '1.5rem', fontWeight: 600 },
     h3: { fontSize: '1.25rem', fontWeight: 600 },

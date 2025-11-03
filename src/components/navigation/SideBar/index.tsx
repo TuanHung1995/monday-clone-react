@@ -16,8 +16,8 @@ import {
 const Sidebar = () => {
   return (
     <Box
-      className="flex flex-col h-screen w-64 bg-[#121b33] text-gray-300 py-3 px-2"
-      sx={{ borderRight: "1px solid rgba(255,255,255,0.05)" }}
+      className="flex flex-col h-full w-64 bg-[#121b33] text-gray-300 py-3 px-2"
+      sx={{ borderRight: "1px solid rgba(255,255,255,0.05)", borderRadius: "0.5rem" }}
     >
       {/* Header */}
       <SidebarHeader />
