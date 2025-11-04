@@ -1,6 +1,8 @@
-import React from "react";
-import { MessageCirclePlus, CircleUserRound, FileCheck2 } from "lucide-react";
-import { Box, Checkbox, Typography, Stack } from "@mui/material";
+import { CircleUserRound, FileCheck2 } from "lucide-react";
+
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 
 interface TaskRowProps {
   task: {
@@ -10,7 +12,7 @@ interface TaskRowProps {
   };
 }
 
-const TaskRow: React.FC<TaskRowProps> = ({ task }) => {
+const TaskRow = ({ task }: TaskRowProps) => {
   return (
 
     <Stack

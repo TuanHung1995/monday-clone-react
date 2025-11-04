@@ -1,23 +1,32 @@
-import React from "react";
+import Box from "@mui/material/Box";
+
+import { TOP_BOTTOM_COLUMN_COLOR } from "@utils/constants";
 
 interface AddTaskRowProps {
   groupId: number;
 }
 
-const AddTaskRow: React.FC<AddTaskRowProps> = ({ groupId }) => {
+const AddTaskRow = ({ groupId }: AddTaskRowProps) => {
   return (
-    <tr className="border-t border-gray-700">
-      <td className="p-1 text-center">
+    <Box sx={{ display: 'flex', borderTop: '1px solid #374151', bgcolor: TOP_BOTTOM_COLUMN_COLOR }}>
+      <Box sx={{ p: 1, textAlign: 'center' }}>
         <input type="checkbox" />
-      </td>
-      <td>
+      </Box>
+      <Box sx={{ flex: 1 }}>
         <input
           type="text"
           placeholder="+ Add item"
-          className="bg-[#33354b] text-white border-none w-full p-2 focus:outline-none"
+          style={{
+            backgroundColor: '#33354b',
+            color: 'white',
+            border: 'none',
+            width: '100%',
+            padding: '8px',
+            outline: 'none',
+          }}
         />
-      </td>
-    </tr>
+      </Box>
+    </Box>
   );
 };
 

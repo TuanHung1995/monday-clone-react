@@ -1,8 +1,10 @@
-import React from "react";
 import TaskTable from "./TaskTable/TaskTable";
 import AddGroupButton from "../AddButton/AddGroupButton";
+import Box from "@mui/material/Box";
 
-const BoardPage: React.FC = () => {
+import { BOARD_BG_COLOR_DARK } from "@utils/constants";
+
+const BoardPage = () => {
   // Giả lập dữ liệu API từ backend Spring Boot
   const colValues = [
     { id: 1, columnId: { id: 1, name: "Task", type: "text", groupId: 1 }, value: "Task 1" },
@@ -50,13 +52,13 @@ const BoardPage: React.FC = () => {
   const rows = 4; // Số lượng hàng giả lập
 
   return (
-    <div className="p-4">
+    <Box sx={{ p: 2, bgcolor: BOARD_BG_COLOR_DARK }}>
       {groups.map((group) => (
-        <TaskTable key={group.id} groupId={group.id} {...(group as unknown as any)} rows={rows} />
+        <TaskTable key={group.id} group={group} {...(group as unknown as any)} rows={rows} />
       ))}
 
       <AddGroupButton />
-    </div>
+    </Box>
   );
 };
 

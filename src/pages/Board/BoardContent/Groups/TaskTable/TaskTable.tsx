@@ -1,9 +1,16 @@
 import AddTaskRow from "../../AddButton/AddTaskRow";
-import TaskRow from "../TaskRow/TaskRow";
 import ColCheckbox from "../TaskColumn/ColCheckbox/ColCheckbox";
 import TaskColumn from "../TaskColumn/TaskColumn";
+import GroupTitle from "../GroupTitle/GroupTitle";
 
-import { Box, Checkbox, Typography, Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
+import { TOP_BOTTOM_COLUMN_COLOR, TASK_ELEMENT_BG_COLOR_DARK } from "@utils/constants";
+
+import {
+  Plus
+} from "lucide-react";
 
 export type ColValue = {
   id: number;
@@ -20,13 +27,19 @@ export type Column = {
   colValues: ColValue[];
 }
 
+interface Group {
+    id: number;
+    name: string;
+    columns: Column[];
+}
+
 interface TaskTableProps {
-  groupId: number;
+  group: Group;
   columns: Column[];
   rows: number;
 }
 
-const TaskTable = ({ groupId, columns, rows }: TaskTableProps) => {
+const TaskTable = ({ group, columns, rows }: TaskTableProps) => {
 
   // Giả lập dữ liệu hàng dựa trên số lượng hàng được truyền vào
   const renderCheckBoxColumns = () => {
@@ -40,7 +53,7 @@ const TaskTable = ({ groupId, columns, rows }: TaskTableProps) => {
   const renderColumnValues = (cols: Column[]) => {
     return cols.map((col) => {
       return <Box key={col.id} sx={{ display: "flex", flexDirection: "column", "&:hover": { backgroundColor: "grey.900" }, height: 48 * rows }}>
-              <Box key={col.id} sx={{ width: "auto", overflowX: "auto", textAlign: "center", height: 48}}>
+              <Box key={col.id} sx={{ width: "auto", overflowX: "auto", textAlign: "center", height: 48, bgcolor: TOP_BOTTOM_COLUMN_COLOR}}>
                 <Typography variant="h6">{col.name}</Typography>
               </Box>
               {renderColValuesForColumn(col.colValues)}
@@ -49,77 +62,37 @@ const TaskTable = ({ groupId, columns, rows }: TaskTableProps) => {
   }
   const renderColValuesForColumn = (col: ColValue[]) => {
     return col.map((colValue) => {
-      // return Array.from({ length: rows }).map((_, rowIndex) => {
         return <TaskColumn key={colValue.id} col={colValue} />;
-      // });
     });
   }
 
   return (
-// import AddColumnButton from "./AddColumnButton";
-// import ColumnHeader from "./ColumnHeader";
-// import TaskRow from "./TaskRow";
-// import AddTaskRow from "./AddTaskRow";
-    <Box sx={{ width: "auto", overflowX: "auto" }}>
-      {/* Header */}
-      {/* <Stack
-        direction="row"
-        alignItems="center"
-        spacing={1}
-        sx={{
-          borderBottom: "1px solid",
-          borderColor: "grey.700",
-          color: "grey.300",
-          fontWeight: 500,
-          px: 1,
-          py: 0.5,
-        }}
-      >
-        <Box sx={{ width: 48, textAlign: "center" }}>
-          <Checkbox size="small" />
-        </Box>
-
-        <Box sx={{ width: 300, textAlign: "center" }}>
-          <Typography variant="body2">Task</Typography>
-        </Box> */}
-
-        {/* Dynamic columns */}
-        {/* {columns.map((col) => (
-          <Box key={col.id} sx={{ flex: 1, minWidth: 100, textAlign: "center" }}> */}
-            {/* <ColumnHeader column={col} /> */}
-            {/* <Typography variant="body2">{col.name}</Typography>
-          </Box>
-        ))} */}
-
-        {/* Add column button */}
-        {/* <Box sx={{ width: 40, textAlign: "center" }}> */}
-          {/* <AddColumnButton groupId={groupId} /> */}+
-        {/* </Box>
-      </Stack> */}
-
-      {/* Rows */}
+    <Box sx={{ width: "fit-content", overflowX: "auto", mb: 4, borderRadius: 2, p: 2, pb: 0 }}>
+      <GroupTitle groupName={group.name} />
       <Box sx={{ display: 'flex' }}>
         {/* Vertical Checkbox */}
-        <Box sx={{ display: 'flex', flexDirection: 'column'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: TASK_ELEMENT_BG_COLOR_DARK}}>
           {renderCheckBoxColumns()}
         </Box>
         {/* Render Columns */}
-        <Box sx={{ display: 'flex'}}>
+        <Box sx={{ display: 'flex', bgcolor: TASK_ELEMENT_BG_COLOR_DARK }}>
           {renderColumnValues(columns)}
+        </Box>
+        <Box>
+          <Plus />
         </Box>
       </Box>
         {/* Add new row */}
         <Box
           sx={{
-            px: 1,
-            py: 1,
+            px: 0,
+            py: 0,
             color: "grey.400",
             cursor: "pointer",
             "&:hover": { color: "primary.main" },
           }}
         >
-          <AddTaskRow groupId={groupId} />
-          {/* + Add Task */}
+          <AddTaskRow groupId={group.id} />
         </Box>
     </Box>
   );

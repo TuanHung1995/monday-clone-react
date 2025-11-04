@@ -5,6 +5,8 @@ import type { ColValue } from "../TaskTable/TaskTable";
 
 import { CircleUserRound, FileCheck2 } from "lucide-react";
 
+import { TASK_ELEMENT_BG_COLOR_DARK } from "@utils/constants";
+
 // interface ColValue {
 //     id: number;
 //     columnId: Column;
@@ -77,7 +79,7 @@ const TaskColumn = ({ col }: { col: ColValue }) => {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 150, height: 48, alignItems: 'center', justifyContent: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 150, height: 48, alignItems: 'center', justifyContent: 'center', bgColor: TASK_ELEMENT_BG_COLOR_DARK, borderRight: '1px solid #4b4e69' }}>
             {/* <Box key={col.id} sx={{ width: "auto", overflowX: "auto" }}>
                 <Typography variant="h6">{col.columnId.name}</Typography>
             </Box> */}
