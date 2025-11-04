@@ -1,73 +1,58 @@
 import React from "react";
-import TaskGroup from "./TaskGroup/TaskGroup";
+import TaskTable from "./TaskTable/TaskTable";
 import AddGroupButton from "../AddButton/AddGroupButton";
 
 const BoardPage: React.FC = () => {
   // Giả lập dữ liệu API từ backend Spring Boot
+  const colValues = [
+    { id: 1, columnId: { id: 1, name: "Task", type: "text", groupId: 1 }, value: "Task 1" },
+    { id: 2, columnId: { id: 1, name: "Task", type: "text", groupId: 1 }, value: "Task 2" },
+    { id: 3, columnId: { id: 1, name: "Task", type: "text", groupId: 1 }, value: "Task 3" },
+    { id: 4, columnId: { id: 2, name: "Status", type: "status", groupId: 1 }, value: "In Progress", color: "#FFA500" },
+    { id: 5, columnId: { id: 2, name: "Status", type: "status", groupId: 1 }, value: "Done", color: "#00FF00" },
+    { id: 6, columnId: { id: 2, name: "Status", type: "status", groupId: 1 }, value: "Stuck", color: "#FF0000" },
+    { id: 7, columnId: { id: 3, name: "Due Date", type: "date", groupId: 1 }, value: "2024-07-01" },
+    { id: 8, columnId: { id: 3, name: "Due Date", type: "date", groupId: 1 }, value: "2024-07-05" },
+    { id: 9, columnId: { id: 3, name: "Due Date", type: "date", groupId: 1 }, value: "2024-07-10" },
+    { id: 10, columnId: { id: 4, name: "Task", type: "text", groupId: 1 }, value: "Task 4" },
+    { id: 11, columnId: { id: 4, name: "Task", type: "text", groupId: 1 }, value: "Task 5" },
+    { id: 12, columnId: { id: 4, name: "Task", type: "text", groupId: 1 }, value: "Task 6" },
+    { id: 13, columnId: { id: 5, name: "Status", type: "status", groupId: 1 }, value: "In Progress", color: "#FFA500" },
+    { id: 14, columnId: { id: 5, name: "Status", type: "status", groupId: 1 }, value: "Done", color: "#00FF00" },
+    { id: 15, columnId: { id: 5, name: "Status", type: "status", groupId: 1 }, value: "Stuck", color: "#FF0000" },
+    { id: 16, columnId: { id: 6, name: "Due Date", type: "date", groupId: 1 }, value: "2024-07-01" },
+    { id: 17, columnId: { id: 6, name: "Due Date", type: "date", groupId: 1 }, value: "2024-07-05" },
+    { id: 18, columnId: { id: 6, name: "Due Date", type: "date", groupId: 1 }, value: "2024-07-10" },
+  ]
+
   const groups = [
     {
       id: 1,
       name: "Team Tasks",
+
       columns: [
-        { id: 1, name: "Owner", type: "person" },
-        { id: 2, name: "Status", type: "status" },
-        { id: 3, name: "Due Date", type: "date" },
-      ],
-      tasks: [
-        {
-          id: 1,
-          name: "Fix login bug",
-          columnValues: [
-            { column: { id: 1, type: "person", name: "Owner" }, value: "" },
-            { column: { id: 2, type: "status", name: "Status" }, value: "Working on it", color: "#fbbf24" },
-            { column: { id: 3, type: "date", name: "Due Date" }, value: "Feb 10" },
-          ],
-        },
-        {
-          id: 2,
-          name: "Update user profile page",
-          columnValues: [
-            { column: { id: 1, type: "person", name: "Owner" }, value: "" },
-            { column: { id: 2, type: "status", name: "Status" }, value: "Stuck", color: "#ef4444" },
-            { column: { id: 3, type: "date", name: "Due Date" }, value: "Feb 12" },
-          ],
-        },
+        { id: 1, groupId: 1, name: "Task", type: 'text', colValues: colValues.filter(cv => cv.columnId.id === 1) },
+        { id: 2, groupId: 1, name: "Status", type: 'status', colValues: colValues.filter(cv => cv.columnId.id === 2) },
+        { id: 3, groupId: 1, name: "Due Date", type: 'date', colValues: colValues.filter(cv => cv.columnId.id === 3) },
       ],
     },
     {
       id: 2,
       name: "Personal Tasks",
       columns: [
-        { id: 4, name: "Owner", type: "person" },
-        { id: 5, name: "Status", type: "status" },
-        { id: 6, name: "Due Date", type: "date" },
+        { id: 4, groupId: 2, name: "Task", type: 'text', colValues: colValues.filter(cv => cv.columnId.id === 4) },
+        { id: 5, groupId: 2, name: "Status", type: 'status', colValues: colValues.filter(cv => cv.columnId.id === 5) },
+        { id: 6, groupId: 2, name: "Due Date", type: 'date', colValues: colValues.filter(cv => cv.columnId.id === 6) },
       ],
-      tasks: [
-        {
-          id: 3,
-          name: "Buy groceries",
-          columnValues: [
-            { column: { id: 4, type: "person", name: "Owner" }, value: "" },
-            { column: { id: 5, type: "status", name: "Status" }, value: "Done", color: "#22c55e" },
-            { column: { id: 6, type: "date", name: "Due Date" }, value: "Feb 11" },
-          ],
-        },
-        {
-          id: 4,
-          name: "Walk the dog",
-          columnValues: [
-            { column: { id: 4, type: "person", name: "Owner" }, value: "" },
-            { column: { id: 5, type: "status", name: "Status" }, value: "In Progress", color: "#fbbf24" },
-            { column: { id: 6, type: "date", name: "Due Date" }, value: "Feb 13" },
-          ],
-        },
-      ],
-  }];
+    },
+  ];
+
+  const rows = 4; // Số lượng hàng giả lập
 
   return (
     <div className="p-4">
       {groups.map((group) => (
-        <TaskGroup key={group.id} groupId={group.id} {...group} />
+        <TaskTable key={group.id} groupId={group.id} {...(group as unknown as any)} rows={rows} />
       ))}
 
       <AddGroupButton />

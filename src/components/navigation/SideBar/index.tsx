@@ -1,4 +1,7 @@
 import { Box } from "@mui/material";
+
+import { Link } from "react-router"
+
 import SidebarHeader from "./Header";
 import SidebarSection from "./Sections";
 import WorkspaceItem from "./WorkspaceItems";
@@ -38,7 +41,9 @@ const Sidebar = () => {
 
         {/* Boards */}
         <div className="ml-6 mt-2 flex flex-col gap-1">
-          <NavItem icon={<LayoutDashboard size={16} />} label="Tasks" />
+          <Link to="/board">
+            <NavItem icon={<LayoutDashboard size={16} />} label="Tasks" />
+          </Link>
           <NavItem icon={<Folder size={16} />} label="Epics" />
           <NavItem icon={<Bug size={16} />} label="Bugs Queue" />
           <NavItem icon={<LayoutDashboard size={16} />} label="New Board" />
