@@ -1,35 +1,33 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
 import type { ColValue } from "../TaskTable/TaskTable";
 
 import { CircleUserRound, FileCheck2 } from "lucide-react";
 
 import { TASK_ELEMENT_BG_COLOR_DARK } from "@utils/constants";
 
-// interface ColValue {
-//     id: number;
-//     columnId: Column;
-//     color: string;
-//     value: string;
-// }
-
-// interface Column {
-//   id: number;
-//   name: string;
-//   type: string;
-//   groupId: number;
-//   colValues: Column[];
-// }
-
-
-
-// interface TaskColumnProps {
-// interface TaskColumnProps {
-//     col: ColValue;
-// }
-
 const TaskColumn = ({ col }: { col: ColValue }) => {
+
+    // const {
+    //     attributes,
+    //     listeners,
+    //     setNodeRef,
+    //     transform,
+    //     transition,
+    // } = useSortable({ 
+    //     id: col.id,
+    //     data: { ...col }
+    //  });
+
+    // const dndKitColumnStyles = {
+    //     transform: CSS.Transform.toString(transform),
+    //     transition,
+    // };
+
     const renderColumnValue = () => {
 
         switch (col.columnId.type) {
@@ -79,11 +77,22 @@ const TaskColumn = ({ col }: { col: ColValue }) => {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 150, height: 48, alignItems: 'center', justifyContent: 'center', bgColor: TASK_ELEMENT_BG_COLOR_DARK, borderRight: '1px solid #4b4e69' }}>
-            {/* <Box key={col.id} sx={{ width: "auto", overflowX: "auto" }}>
-                <Typography variant="h6">{col.columnId.name}</Typography>
-            </Box> */}
-
+        <Box 
+            // ref={setNodeRef}
+            // style={dndKitColumnStyles}
+            // {...attributes}
+            // {...listeners}
+            sx= {{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                minWidth: 150, 
+                height: 48, 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                bgColor: TASK_ELEMENT_BG_COLOR_DARK, 
+                borderRight: '1px solid #4b4e69' 
+            }}
+        >
             {/* Render column values here */}
             {renderColumnValue()}
         </Box>
