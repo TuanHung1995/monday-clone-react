@@ -20,6 +20,8 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@types': path.resolve(__dirname, 'src/types'),
       '@routes': path.resolve(__dirname, 'src/routes'),
+      '@constants': path.resolve(__dirname, 'src/utils/constants'),
+      '@api': path.resolve(__dirname, 'src/apis'),
     },
   },
   server: {
