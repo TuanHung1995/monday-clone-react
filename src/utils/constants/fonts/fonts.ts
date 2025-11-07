@@ -1,0 +1,5 @@
+const BOARD_TITLE_FONT_WEIGHT = 500
+
+export {
+    BOARD_TITLE_FONT_WEIGHT
+}

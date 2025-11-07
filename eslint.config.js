@@ -5,19 +5,72 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
+// export default defineConfig([
+//   globalIgnores(['dist']),
+//   {
+//     files: ['**/*.{ts,tsx}'],
+//     extends: [
+//       js.configs.recommended,
+//       tseslint.configs.recommended,
+//       reactHooks.configs['recommended-latest'],
+//       reactRefresh.configs.vite,
+//     ],
+//     languageOptions: {
+//       ecmaVersion: 2020,
+//       globals: globals.browser,
+//     },
+//     'react/prop-types': 'off',
+//   },
+// ])
+module.exports = {
+  env: { browser: true, es2020: true, node: true },
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended'
+  ],
+  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+  settings: { react: { version: 'detect' } },
+  plugins: [
+    'react',
+    'react-hooks',
+    'react-refresh'
+  ],
+  rules: {
+    // REACT
+    'react-refresh/only-export-components': 'warn',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'react/prop-types': 0,
+    'react/display-name': 0,
+
+    // MUI
+    'no-restricted-imports': [
+      'error',
+      {
+        'patterns': ['@mui/*/*/*']
+      }
     ],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-  },
-])
+
+    // COMMON
+    'no-console': 1,
+    'no-lonely-if': 1,
+    'no-unused-vars': 1,
+    'no-trailing-spaces': 1,
+    'no-multi-spaces': 1,
+    'no-multiple-empty-lines': 1,
+    'space-before-blocks': ['error', 'always'],
+    'object-curly-spacing': [1, 'always'],
+    'indent': ['warn', 2],
+    'semi': [1, 'never'],
+    'quotes': ['error', 'single'],
+    'array-bracket-spacing': 1,
+    'linebreak-style': 0,
+    'no-unexpected-multiline': 'warn',
+    'keyword-spacing': 1,
+    'comma-dangle': 1,
+    'comma-spacing': 1,
+    'arrow-spacing': 1
+  }
+}

@@ -1,68 +1,82 @@
+/* stylelint-disable at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    --font-family: Figtree, Roboto, Noto Sans Hebrew, Noto Kufi Arabic, Noto Sans JP, sans-serif;
+    --title-font-family: Poppins, Roboto, Noto Sans Hebrew, Noto Kufi Arabic, Noto Sans JP, sans-serif;
+    --h1-font-family: var(--title-font-family);
+    --font-smoothing-webkit: antialiased;
+    --font-smoothing-moz: grayscale;
+    --font-weight-very-light: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-bold: 500;
+    --font-line-height-10: 18px;
+    --font-line-height-20: 24px;
+    --font-line-height-30: 24px;
+    --font-line-height-40: 24px;
+    --font-line-height-50: 32px;
+    --font-line-height-60: 42px;
+    --font-size-10: 14px;
+    --font-size-20: 14px;
+    --font-size-30: 16px;
+    --font-size-40: 18px;
+    --font-size-50: 24px;
+    --font-size-60: 30px;
+    --font-size-h1: var(--font-size-60);
+    --font-size-h2: var(--font-size-50);
+    --font-size-h3: var(--font-size-50);
+    --font-size-h4: var(--font-size-40);
+    --font-size-h5: var(--font-size-30);
+    --font-size-general-label: var(--font-size-20);
+    --font-size-paragraph: var(--font-size-30);
+    --font-size-subtext: var(--font-size-10);
+    --font-line-height-h1: var(--font-line-height-60);
+    --font-line-height-h2: var(--font-line-height-50);
+    --font-line-height-h3: var(--font-line-height-50);
+    --font-line-height-h4: var(--font-line-height-40);
+    --font-line-height-h5: var(--font-line-height-30);
+    --font-line-height-general-label: var(--font-line-height-20);
+    --font-line-height-paragraph: var(--font-line-height-30);
+    --font-line-height-subtext: var(--font-line-height-10);
+    --font-h1: var(--font-weight-bold) var(--font-size-h1) / var(--font-line-height-h1) var(--title-font-family);
+    --font-h2: var(--font-weight-bold) var(--font-size-h2) / var(--font-line-height-h2) var(--title-font-family);
+    --font-h3: var(--font-weight-light) var(--font-size-h3) / var(--font-line-height-h3) var(--title-font-family);
+    --font-h4: var(--font-weight-bold) var(--font-size-h4) / var(--font-line-height-h4) var(--title-font-family);
+    --font-h5: var(--font-weight-bold) var(--font-size-h5) / var(--font-line-height-h5) var(--font-family);
+    --font-general-label: var(--font-weight-normal) var(--font-size-general-label) / var(--font-line-height-general-label) var(--font-family);
+    --font-paragraph: var(--font-weight-normal) var(--font-size-paragraph) / var(--font-line-height-paragraph) var(--font-family);
+    --font-subtext: var(--font-weight-normal) var(--font-size-subtext) / var(--font-line-height-subtext) var(--font-family);
+    --font-h1-bold: 700 32px / 40px var(--title-font-family);
+    --font-h1-medium: 600 32px / 40px var(--title-font-family);
+    --font-h1-normal: 500 32px / 40px var(--title-font-family);
+    --font-h1-light: 300 32px / 40px var(--title-font-family);
+    --font-h2-bold: 700 24px / 30px var(--title-font-family);
+    --font-h2-medium: 600 24px / 30px var(--title-font-family);
+    --font-h2-normal: 500 24px / 30px var(--title-font-family);
+    --font-h2-light: 300 24px / 30px var(--title-font-family);
+    --font-h3-bold: 700 18px / 24px var(--title-font-family);
+    --font-h3-medium: 600 18px / 24px var(--title-font-family);
+    --font-h3-normal: 500 18px / 24px var(--title-font-family);
+    --font-h3-light: 300 18px / 24px var(--title-font-family);
+    --font-text1-bold: 700 16px / 22px var(--font-family);
+    --font-text1-medium: 600 16px / 22px var(--font-family);
+    --font-text1-normal: 400 16px / 22px var(--font-family);
+    --font-text2-bold: 700 14px / 20px var(--font-family);
+    --font-text2-medium: 600 14px / 20px var(--font-family);
+    --font-text2-normal: 400 14px / 20px var(--font-family);
+    --font-text3-bold: 700 12px / 16px var(--font-family);
+    --font-text3-medium: 600 12px / 16px var(--font-family);
+    --font-text3-normal: 400 12px / 16px var(--font-family);
+    --letter-spacing-h1-bold: -0.5px;
+    --letter-spacing-h1-normal: -0.5px;
+    --letter-spacing-h1-light: -0.5px;
+    --letter-spacing-h2-bold: -0.1px;
+    --letter-spacing-h2-normal: -0.1px;
+    --letter-spacing-h2-light: -0.1px;
+    --letter-spacing-h3-bold: -0.1px;
+    --letter-spacing-h3-normal: -0.1px;
+    --letter-spacing-h3-light: -0.1px;
 }
