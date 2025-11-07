@@ -1,7 +1,5 @@
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
-import { Plus, Search, SortAsc, EyeOff, Group } from "lucide-react";
 
 import NewTaskButton from "./NewTaskButton";
 import SearchBoardOption from "./Search";
@@ -14,31 +12,29 @@ import GroupBy from "./GroupBy";
 
 const BoardOptions = () => {
 
-    return (
-        <Box 
-            sx={{
-              height: '64px',
-                py: '16px'
-            }}
-            className="flex items-center mt-1">
-        <NewTaskButton />
+  return (
+    <Box
+      sx={{
+        height: '64px',
+        py: '16px'
+      }}
+      className="flex items-center mt-1">
 
-        <SearchBoardOption />
+      <NewTaskButton />
 
-        <PersonBoardOption />
+      <SearchBoardOption />
 
-        <BoardFilter />
+      <PersonBoardOption />
 
-        <Tooltip title="Sort board by any column">
-          <SortBoardOption />
-        </Tooltip>
+      <BoardFilter />
 
+      <SortBoardOption />
 
-        <HideBoardOption />
+      <HideBoardOption />
 
-        <GroupBy />
-      </Box>
-    )
+      <GroupBy />
+    </Box>
+  )
 
 }
 

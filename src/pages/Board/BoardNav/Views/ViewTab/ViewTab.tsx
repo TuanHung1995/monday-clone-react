@@ -24,6 +24,7 @@ const ViewTab = ({ viewName }: ViewTabProps) => {
       }}
     >
       <Box
+      // className="px-1 font-[14px] text-start"
        component="span"
        sx={{
         px: '4px',

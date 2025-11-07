@@ -2,12 +2,9 @@ import React from "react";
 
 import BoardViews from "./Views";
 import BoardOptions from "./Options";
+import RightBoardNavOption from "./TopNav/RightOption/RightBoardNavOption";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { 
     Plus,
@@ -51,7 +48,7 @@ const BoardNavbar: React.FC<BoardNavbarProps> = ({
       className="backdrop-blur-md text-gray-200"
     >
       {/* Top row */}
-      <div className="flex justify-between items-center">
+      <Box className="flex justify-between items-center">
         {/* Board title */}
         <Box
         sx={{
@@ -72,55 +69,8 @@ const BoardNavbar: React.FC<BoardNavbarProps> = ({
         </Box>
 
         {/* Right controls */}
-        <div className="flex items-center space-x-2">
-          <Tooltip title="Integrate">
-            <Button
-              startIcon={<Workflow size={16} />}
-              size="small"
-              variant="text"
-              className="!text-gray-300 hover:!bg-gray-700"
-            >
-              Integrate
-            </Button>
-          </Tooltip>
-
-          <Tooltip title="Automate">
-            <Button
-              startIcon={<Zap size={16} />}
-              size="small"
-              variant="text"
-              className="!text-gray-300 hover:!bg-gray-700"
-            >
-              Automate
-            </Button>
-          </Tooltip>
-
-          <Tooltip title="Inbox">
-            <IconButton size="small" className="text-gray-300 hover:bg-gray-700">
-              <MessageSquare size={18} />
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip title="Invite team">
-            <Button
-              size="small"
-              variant="outlined"
-              startIcon={<Users size={16} />}
-              className="!border-gray-600 !text-gray-300 hover:!bg-gray-700"
-            >
-              Invite
-            </Button>
-          </Tooltip>
-
-          <Avatar sx={{ bgcolor: "#ec4899", width: 32, height: 32 }}>
-            {userInitials}
-          </Avatar>
-
-          <IconButton size="small" className="hover:bg-gray-700 text-gray-300">
-            <MoreHorizontal size={18} />
-          </IconButton>
-        </div>
-      </div>
+        <RightBoardNavOption />
+      </Box>
 
       <BoardViews />
 
