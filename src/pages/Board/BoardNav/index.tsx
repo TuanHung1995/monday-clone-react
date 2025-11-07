@@ -1,5 +1,14 @@
 import React from "react";
-import { Button, Avatar, Tooltip, IconButton } from "@mui/material";
+
+import BoardViews from "./Views";
+import BoardOptions from "./Options";
+
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import { 
     Plus,
     ChevronDown, 
@@ -9,13 +18,13 @@ import {
     EyeOff, 
     Group, 
     MoreHorizontal, 
-    Home, 
     Users, 
-    Link2, 
     MessageSquare, 
     Zap, 
     Workflow 
 } from "lucide-react";
+
+import { BOARD_BG_COLOR_DARK } from "@utils/constants";
 
 interface BoardNavbarProps {
   boardName?: string;
@@ -29,17 +38,38 @@ const BoardNavbar: React.FC<BoardNavbarProps> = ({
   userName = "Person",
 }) => {
   return (
-    <div
-      className="backdrop-blur-md bg-[#1c1f26]/90 border-b border-gray-800 text-gray-200"
+    <Box
+      sx={{
+        backgroundColor: BOARD_BG_COLOR_DARK,
+        pl: "38px",
+        pr: "30px",
+        pt: "18px",
+        zIndex: 10,
+        position: 'sticky',
+
+      }}
+      className="backdrop-blur-md text-gray-200"
     >
       {/* Top row */}
-      <div className="flex justify-between items-center px-4 py-2">
+      <div className="flex justify-between items-center">
         {/* Board title */}
-        <div className="flex items-center space-x-2">
-          <span className="font-semibold text-lg">{boardName}</span>
+        <Box
+        sx={{
+          px: "1px",
+          py: "4px",
+        }}
+          className="flex items-center space-x-2">
+          <Typography 
+            variant="h2"
+            sx={{
+              fontWeight: 500,
+            }}
+          >
+            {boardName}
+          </Typography>
           <ChevronDown className="text-gray-400" size={18} />
           {/* <span className="text-gray-400">▾</span> */}
-        </div>
+        </Box>
 
         {/* Right controls */}
         <div className="flex items-center space-x-2">
@@ -92,65 +122,11 @@ const BoardNavbar: React.FC<BoardNavbarProps> = ({
         </div>
       </div>
 
+      <BoardViews />
+
       {/* Second row */}
-      <div className="flex items-center space-x-3 px-4 pb-2 border-t border-gray-800 mt-1">
-        <Button
-          size="small"
-          variant="contained"
-          startIcon={<Plus size={16} />}
-          className="!bg-blue-600 !text-white normal-case"
-        >
-          New Item
-        </Button>
-
-        <Button
-          size="small"
-          variant="text"
-          startIcon={<Search size={16} />}
-          className="!text-gray-300 hover:!bg-gray-700 normal-case"
-        >
-          Search
-        </Button>
-
-        <Button
-          size="small"
-          variant="text"
-          startIcon={<Filter size={16} />}
-          className="!text-gray-300 hover:!bg-gray-700 normal-case"
-        >
-          Filter
-        </Button>
-
-        <Tooltip title="Sort board by any column">
-          <Button
-            size="small"
-            variant="text"
-            startIcon={<SortAsc size={16} />}
-            className="!text-gray-300 hover:!bg-gray-700 normal-case"
-          >
-            Sort
-          </Button>
-        </Tooltip>
-
-        <Button
-          size="small"
-          variant="text"
-          startIcon={<EyeOff size={16} />}
-          className="!text-gray-300 hover:!bg-gray-700 normal-case"
-        >
-          Hide
-        </Button>
-
-        <Button
-          size="small"
-          variant="text"
-          startIcon={<Group size={16} />}
-          className="!text-gray-300 hover:!bg-gray-700 normal-case"
-        >
-          Group by
-        </Button>
-      </div>
-    </div>
+      <BoardOptions />
+    </Box>
   );
 };
 

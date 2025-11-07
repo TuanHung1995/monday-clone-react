@@ -1,3 +1,5 @@
+
+
 const NORMAL_TASK_COLOR = '#2f324e';
 const HOVERED_TASK_COLOR = '#33354b';
 const TOP_BOTTOM_COLUMN_COLOR = '#30324e';

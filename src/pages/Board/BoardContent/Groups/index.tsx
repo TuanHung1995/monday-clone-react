@@ -78,12 +78,12 @@ const BoardPage = () => {
 
   const rows = 4; // Số lượng hàng giả lập
 
-  // const [orderedGroupsState, setOrderedGroupsState] = useState([]);
+  const [orderedGroupsState, setOrderedGroupsState] = useState([]);
 
-  // useEffect(() => {
-  //   const orderedGroups = mapOrder(groups, [2, 1], 'id');
-  //   setOrderedGroupsState(orderedGroups);
-  // }, []);
+  useEffect(() => {
+    const orderedGroups = mapOrder(groups, [2, 1], 'id');
+    setOrderedGroupsState(orderedGroups);
+  }, []);
 
   const handleDragEnd = (event: any) => {
     console.log('Drag ended', event);
