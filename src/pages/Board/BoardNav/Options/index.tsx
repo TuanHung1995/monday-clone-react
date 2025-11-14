@@ -1,4 +1,3 @@
-import Tooltip from "@mui/material/Tooltip";
 import Box from "@mui/material/Box";
 
 import NewTaskButton from "./NewTaskButton";

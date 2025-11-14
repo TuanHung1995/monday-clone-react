@@ -1,6 +1,3 @@
-import Box from "@mui/material/Box";
-import { Filter } from "lucide-react";
-
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const FilterDropdown = () => {

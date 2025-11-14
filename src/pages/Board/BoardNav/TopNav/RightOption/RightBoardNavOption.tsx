@@ -4,7 +4,6 @@ import InviteBoardNav from "./Invite/InviteBoardNav";
 
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
 
-
 const RightBoardNavOption = () => {
     return (
         <Box className="flex items-center space-x-2">

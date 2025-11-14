@@ -5,9 +5,10 @@ import CollapseGroup from "./CollapseGroup/CollapseGroup";
 
 interface GroupTitleProps {
     groupName: string;
+    GroupTitleColor: string;
 }
 
-const GroupTitle = ({ groupName }: GroupTitleProps) => {
+const GroupTitle = ({ groupName, GroupTitleColor }: GroupTitleProps) => {
 
     return (
         <Box
@@ -18,7 +19,7 @@ const GroupTitle = ({ groupName }: GroupTitleProps) => {
                 px: '8px',
             }}
         >
-            <CollapseGroup GroupTitleColor="blue" />
+            <CollapseGroup GroupTitleColor={GroupTitleColor} />
             <TextField
                 variant="standard"
                 value={groupName}
@@ -28,9 +29,9 @@ const GroupTitle = ({ groupName }: GroupTitleProps) => {
                         px: "8px",
                         mb: "8px",
                         width: "100%",
-                        color: "white",
+                        color: GroupTitleColor,
                         '& .MuiInputBase-input': {
-                            color: 'white',
+                            color: GroupTitleColor,
                             fontSize: '16px',
                         },
                         "&:focus-within": {
