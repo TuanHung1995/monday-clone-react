@@ -1,30 +1,49 @@
+import Box from '@mui/material/Box';
+
 const StatusOption = ({ label, active }: { label: string; active: boolean }) => {
-  return (
-    <div
-      className={`flex items-center gap-2 cursor-pointer transition ${active ? "text-blue-400" : "text-gray-400"
-        }`}
-    >
-      <div
-        className={`w-3 h-3 rounded-full border ${active ? "border-blue-400 bg-blue-400" : "border-gray-400"
-          }`}
-      ></div>
-      <span className="text-sm">{label}</span>
-    </div>
-  );
-}; 
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                cursor: "pointer",
+                transition: "color 0.3s",
+                color: active ? "#3b82f6" : "#9ca3af"
+            }}
+        >
+            <Box
+                sx={{
+                    width: "0.75rem",
+                    height: "0.75rem",
+                    borderRadius: "50%",
+                    border: `1px solid ${active ? "#3b82f6" : "#9ca3af"}`,
+                    backgroundColor: active ? "#3b82f6" : "transparent"
+                }}
+            ></Box>
+            <Box sx={{ fontSize: "0.875rem" }}>{label}</Box>
+        </Box>
+    );
+};
 
 const WorkStatus = () => {
 
     return (
-        <div className="border-t border-[#3b3f55] mt-4 pt-4">
-                <div className="text-sm mb-2">Working status</div>
+        <Box
+            sx={{
+                borderTop: "1px solid #3b3f55",
+                marginTop: "1rem",
+                paddingTop: "1rem"
+            }}
+        >
+            <Box sx={{ fontSize: "0.875rem", marginBottom: "0.5rem" }}>Working status</Box>
 
-                <div className="flex items-center gap-4">
-                  <StatusOption label="Do not disturb" active={false} />
-                  <StatusOption label="On" active={false} />
-                  <StatusOption label="Off" active={true} />
-                </div>
-              </div>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                <StatusOption label="Do not disturb" active={false} />
+                <StatusOption label="On" active={false} />
+                <StatusOption label="Off" active={true} />
+            </Box>
+        </Box>
     )
 
 }

@@ -1,6 +1,7 @@
-import { User, FlaskConical, Sparkles, Users, Smartphone, Palette, ChevronRight } from "lucide-react";
-import Button from '@mui/material/Button';
+import { User, FlaskConical, Sparkles, Users, Smartphone } from "lucide-react";
 import MenuItem from '@components/common/Button/MenuItem';
+import UpgradePlan from "./UpgradePlan/UpgradePlan";
+import ChangeTheme from "./ChangeTheme/ChangeTheme";
 
 const ExploreMenu = () => {
 
@@ -19,26 +20,11 @@ const ExploreMenu = () => {
 
             <MenuItem icon={<Users size={18} />} label="Invite members" />
             <MenuItem icon={<User size={18} />} label="Get help" />
-            <MenuItem
-                icon={<Palette size={18} />}
-                label="Change theme"
-                right={<ChevronRight size={16} />}
-            />
+            
+            <ChangeTheme />
 
             {/* Upgrade */}
-            <Button
-                variant="contained"
-                fullWidth
-                sx={{
-                    backgroundColor: "#28a745",
-                    marginTop: "16px",
-                    paddingY: "6px",
-                    borderRadius: "8px",
-                    "&:hover": { backgroundColor: "#23963d" },
-                }}
-            >
-                Upgrade
-            </Button>
+            <UpgradePlan />
         </div>
     )
 
