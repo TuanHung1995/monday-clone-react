@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
-import { CustomTooltip } from "@components/common/Tooltip/Tooltip";
+import CustomTooltip from "@components/common/Tooltip/CustomTooltip";
 
 import { Table2 } from "lucide-react";
 

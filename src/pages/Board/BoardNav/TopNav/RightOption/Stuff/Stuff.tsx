@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { CustomTooltip } from "@components/common/Tooltip/Tooltip";
+import CustomTooltip from "@components/common/Tooltip/CustomTooltip";
 
 import { Plug, Bot, Link2 } from "lucide-react";
 

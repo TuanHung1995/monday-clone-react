@@ -7,18 +7,7 @@ import RightBoardNavOption from "./TopNav/RightOption/RightBoardNavOption";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { 
-    Plus,
-    ChevronDown, 
-    Search,
-    Filter, 
-    SortAsc, 
-    EyeOff, 
-    Group, 
-    MoreHorizontal, 
-    Users, 
-    MessageSquare, 
-    Zap, 
-    Workflow 
+    ChevronDown,
 } from "lucide-react";
 
 import { BOARD_BG_COLOR_DARK } from "@utils/constants";
