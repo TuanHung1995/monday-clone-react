@@ -1,99 +1,52 @@
-import { Box, Button, TextField, Typography, Paper } from "@mui/material";
-import { Mail, Lock } from "lucide-react";
+import { useState } from "react";
+import { useAuthStore } from "@store/auth.store";
+import { useNavigate, useLocation } from "react-router-dom";
+import { loginService } from "@services/api/auth/loginService";
 
-export default function MondayLogin() {
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const data = await loginService(email, password);
+
+      // Lưu token mock
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      alert("Login success (mock)!");
+      window.location.href = "/home";
+    } catch (e) {
+      alert("Login failed");
+    }
+  };
+
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        bgcolor: "#0d1220",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        p: 3,
-      }}
-    >
-      <Paper
-        elevation={10}
-        sx={{
-          width: "100%",
-          maxWidth: 420,
-          p: 5,
-          borderRadius: 4,
-        }}
+    <div className="flex flex-col w-80 gap-4 mx-auto mt-20">
+      <h1 className="text-xl font-semibold">Login (Mocked)</h1>
+
+      <input
+        type="email"
+        placeholder="Email"
+        className="border p-2 rounded"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        className="border p-2 rounded"
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button
+        onClick={handleLogin}
+        className="bg-blue-600 text-white p-2 rounded"
       >
-        <Typography
-          variant="h4"
-          fontWeight={700}
-          textAlign="center"
-          color="#323338"
-          mb={4}
-        >
-          Welcome back!
-        </Typography>
-
-        <Box component="form" noValidate autoComplete="off" sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-          <Box>
-            <Typography fontSize={14} fontWeight={600} color="#323338" mb={1}>
-              Email
-            </Typography>
-            <Box sx={{ position: "relative" }}>
-              <Mail size={18} style={{ position: "absolute", top: "50%", left: 12, transform: "translateY(-50%)", opacity: 0.6 }} />
-              <TextField
-                fullWidth
-                placeholder="name@company.com"
-                type="email"
-                sx={{
-                  "& .MuiInputBase-root": {
-                    borderRadius: 2,
-                    pl: 5,
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-
-          <Box>
-            <Typography fontSize={14} fontWeight={600} color="#323338" mb={1}>
-              Password
-            </Typography>
-            <Box sx={{ position: "relative" }}>
-              <Lock size={18} style={{ position: "absolute", top: "50%", left: 12, transform: "translateY(-50%)", opacity: 0.6 }} />
-              <TextField
-                fullWidth
-                placeholder="Enter your password"
-                type="password"
-                sx={{
-                  "& .MuiInputBase-root": {
-                    borderRadius: 2,
-                    pl: 5,
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-
-          <Button
-            variant="contained"
-            sx={{
-              mt: 1,
-              py: 1.4,
-              borderRadius: 2,
-              backgroundColor: "#6161ff",
-              textTransform: "none",
-              fontSize: 16,
-              fontWeight: 600,
-              ":hover": { backgroundColor: "#4f4ff0" },
-            }}
-          >
-            Log in
-          </Button>
-        </Box>
-
-        <Typography textAlign="center" mt={4} fontSize={14} color="#676879">
-          Don't have an account? <span style={{ color: "#6161ff", cursor: "pointer" }}>Sign up</span>
-        </Typography>
-      </Paper>
-    </Box>
+        Login
+      </button>
+    </div>
   );
 }

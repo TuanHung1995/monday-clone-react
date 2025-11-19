@@ -21,7 +21,7 @@ export default defineConfig({
       '@routes': path.resolve(__dirname, 'src/routes'),
       '@services': path.resolve(__dirname, 'src/services'),
       '@theme': path.resolve(__dirname, 'src/theme'),
-      // '@store': path.resolve(__dirname, 'src/store'),
+      '@store': path.resolve(__dirname, 'src/store'),
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@constants': path.resolve(__dirname, 'src/utils/constants'),
       '@types': path.resolve(__dirname, 'src/types'),

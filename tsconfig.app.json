@@ -37,7 +37,7 @@
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
       "@theme/*": ["theme/*"],
-      // "@store/*": ["store/*"],
+      "@store/*": ["store/*"],
       "@utils/*": ["utils/*"],
       "@constants/*": ["utils/constants/*"],
       "@types/*": ["types/*"]
