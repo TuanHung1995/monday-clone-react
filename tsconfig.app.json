@@ -27,18 +27,20 @@
     /* Path aliases */
     "baseUrl": "src",
     "paths": {
+      "@apis/*": ["apis/*"],
+      "assets/*": ["assets/*"],
       "@components/*": ["components/*"],
-      "@pages/*": ["pages/*"],
+      "@config/*": ["config/*"],
       "@hooks/*": ["hooks/*"],
-      "@store/*": ["store/*"],
+      "@layouts/*": ["layouts/*"],
+      "@pages/*": ["pages/*"],
+      "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
       "@theme/*": ["theme/*"],
+      // "@store/*": ["store/*"],
       "@utils/*": ["utils/*"],
-      "@types/*": ["types/*"],
-      "@layouts/*": ["layouts/*"],
-      "@routes/*": ["routes/*"],
       "@constants/*": ["utils/constants/*"],
-      "@api/*": ["apis/*"]
+      "@types/*": ["types/*"]
     }
   },
   "include": ["src"]
