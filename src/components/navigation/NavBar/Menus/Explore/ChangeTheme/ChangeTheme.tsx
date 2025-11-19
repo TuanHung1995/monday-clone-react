@@ -22,8 +22,6 @@ const ChangeTheme = ({ handleClick, open, anchorEl, handleClose }: {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
             />
-
-            {/* <AvatarMenu handleClick={handleClick} open={open} /> */}
             <Menu
                 id="change-theme-menu"
                 anchorEl={anchorEl}
