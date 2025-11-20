@@ -1,5 +1,6 @@
-import { User, Upload, Trash2, Archive, Settings, LogOut, FlaskConical, Sparkles, Users } from "lucide-react";
+import { Upload, Trash2, Archive, Settings, LogOut, FlaskConical, Sparkles, Users } from "lucide-react";
 import MenuItem from '@components/common/Button/MenuItem';
+import ProfileButton from "./ProfileButton/ProfileButton";
 
 const AccountMenu = () => {
 
@@ -9,7 +10,7 @@ const AccountMenu = () => {
                 Account
             </div>
 
-            <MenuItem icon={<User size={18} />} label="My profile" />
+            <ProfileButton />
             <MenuItem icon={<Upload size={18} />} label="Import data" />
             <MenuItem icon={<Sparkles size={18} />} label="Automations" />
             <MenuItem icon={<FlaskConical size={18} />} label="Developers" />
