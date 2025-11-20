@@ -1,5 +1,5 @@
-// src/components/BoardContent/index.tsx
 import { useState } from "react";
+import Box from "@mui/material/Box";
 import {
   DndContext,
   PointerSensor,
@@ -10,10 +10,9 @@ import {
   DragOverlay,
 } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
-import type { Group, Column, Task } from "@api/mock-board-data-1";
+import type { Group, Column, Task } from "@apis/mock-board-data-1";
 import TaskTable from "./TaskTable/TaskTable";
-// import TaskRow from "./TaskRow";
-// import TaskColumn from "./TaskColumn";
+import { BOARD_BG_COLOR_DARK } from "@utils/constants";
 
 type ActiveItem =
   | { type: "GROUP"; group: Group }
@@ -115,14 +114,24 @@ export default function BoardContent({ initialGroups, initialColumns }: BoardCon
     setActiveItem(null);
   };
 
+  const orderedGroups = [...groups].sort((a, b) => (a.order_index ?? 0) - (b.order_index ?? 0));
+
   return (
-    <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
-      <SortableContext items={groups.map((g) => g.id)} strategy={verticalListSortingStrategy}>
-        <div style={{ padding: 12 }}>
-          {groups.map((g) => (
+    <Box sx={{ p: 2, bgcolor: BOARD_BG_COLOR_DARK }}>
+      <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
+      <SortableContext items={orderedGroups.map((g) => g.id)} strategy={verticalListSortingStrategy}>
+        <Box 
+          sx={{
+            width: "fit-content",
+            mb: 4,
+            p: 2,
+            pb: 0
+          }}
+        >
+          {orderedGroups.map((g) => (
             <TaskTable key={g.id} group={g} columns={columns} />
           ))}
-        </div>
+        </Box>
       </SortableContext>
 
       <DragOverlay>
@@ -145,5 +154,7 @@ export default function BoardContent({ initialGroups, initialColumns }: BoardCon
         )}
       </DragOverlay>
     </DndContext>
+    </Box>
+    
   );
 }
