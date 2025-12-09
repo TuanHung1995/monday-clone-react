@@ -1,147 +1,80 @@
-// import { create } from "zustand";
-// import { persist } from "zustand/middleware";
-// import { authApi } from "@apis/auth/authApi";
-
-// interface AuthState {
-//   user: any;
-//   accessToken: string | null;
-//   refreshToken: string | null;
-//   isAuthenticated: boolean;
-
-//   login: (email: string, password: string) => Promise<boolean>;
-//   logout: () => void;
-//   refreshTokenSilently: () => Promise<boolean>;
-// }
-
-// export const useAuthStore = create<AuthState>()(
-//   persist(
-//     (set, get) => ({
-//       user: null,
-//       accessToken: null,
-//       refreshToken: null,
-//       isAuthenticated: false,
-
-//       login: async (email, password) => {
-//         try {
-//           const res = await authApi.login(email, password);
-
-//           set({
-//             user: res.user,
-//             accessToken: res.accessToken,
-//             refreshToken: res.refreshToken,
-//             isAuthenticated: true,
-//           });
-
-//           return true;
-//         } catch (err) {
-//           return false;
-//         }
-//       },
-
-//       logout: () => {
-//         set({
-//           user: null,
-//           accessToken: null,
-//           refreshToken: null,
-//           isAuthenticated: false,
-//         });
-//       },
-
-//       refreshTokenSilently: async () => {
-//         try {
-//           const res = await authApi.refresh();
-
-//           set({
-//             accessToken: res.accessToken,
-//             refreshToken: res.refreshToken,
-//           });
-
-//           return true;
-//         } catch (e) {
-//           return false;
-//         }
-//       },
-//     }),
-//     {
-//       name: "auth-store",
-//     }
-//   )
-// );
-
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { authApi } from "@apis/auth/authApi";
 
 interface AuthState {
   user: any;
-  accessToken: string | null;
-  refreshToken: string | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
 
   login: (email: string, password: string) => Promise<boolean>;
-  // Thêm hàm này để xử lý login từ Google
-  loginWithToken: (token: string) => void; 
-  logout: () => void;
-  refreshTokenSilently: () => Promise<boolean>;
+  logout: () => Promise<void>;
+  checkAuth: () => Promise<void>; // Check Session (Cookie) còn hợp lệ không
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       user: null,
-      accessToken: null,
-      refreshToken: null,
       isAuthenticated: false,
+      isLoading: true, // Waiting for checkAuth on app start
+
+      // Function to call API /me to check if the Cookie is still valid
+      checkAuth: async () => {
+        // set({ isLoading: true });
+        try {
+          // Call API to get user info. If the Cookie is valid, backend will return data.
+          const user = await authApi.getMe();
+          set({ user, isAuthenticated: true });
+        } catch (error) {
+          // If error (401), it means not logged in or cookie expired
+          set({ user: null, isAuthenticated: false });
+        } finally {
+          set({ isLoading: false });
+        }
+      },
 
       login: async (email, password) => {
+        set({ isLoading: true });
         try {
           const res = await authApi.login(email, password);
+          // Backend set Cookie xong, ta chỉ cần lưu user info
           set({
-            user: res.user,
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken,
+            user: res.user, 
             isAuthenticated: true,
           });
           return true;
         } catch (err) {
+          console.error(err);
           return false;
+        } finally {
+          set({ isLoading: false });
         }
       },
 
-      // Implement logic set token
-      loginWithToken: (token: string) => {
-        set({
-            accessToken: token,
-            isAuthenticated: true,
-            // Lưu ý: Ở đây chúng ta chưa có thông tin User ngay lập tức.
-            // Bạn có thể gọi thêm API /me để lấy thông tin user sau khi set token nếu cần.
-        });
-      },
-
-      logout: () => {
-        set({
-          user: null,
-          accessToken: null,
-          refreshToken: null,
-          isAuthenticated: false,
-        });
-      },
-
-      refreshTokenSilently: async () => {
+      logout: async () => {
         try {
-          const res = await authApi.refresh();
-          set({
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken,
-          });
-          return true;
-        } catch (e) {
-          return false;
+            // 1. Gọi Backend để xóa Cookie
+            await authApi.logout(); 
+        } catch (error) {
+            console.error("Logout API failed", error);
         }
+        
+        // 2. Xóa state ở Frontend
+        set({ user: null, isAuthenticated: false });
+        localStorage.setItem("auth-store", JSON.stringify({ user: null, isAuthenticated: false }));
+        
+        // 3. Redirect về Login (dùng window.location để clear sạch bộ nhớ)
+        window.location.href = "/login";
       },
     }),
     {
       name: "auth-store",
+      // Chỉ lưu user info, không lưu trạng thái loading
+      partialize: (state) => ({ 
+        user: state.user, 
+        isAuthenticated: state.isAuthenticated 
+      }),
     }
   )
 );
