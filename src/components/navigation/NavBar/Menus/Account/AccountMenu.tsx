@@ -1,8 +1,15 @@
 import { Upload, Trash2, Archive, Settings, LogOut, FlaskConical, Sparkles, Users } from "lucide-react";
 import MenuItem from '@components/common/Button/MenuItem';
 import ProfileButton from "./ProfileButton/ProfileButton";
+import { useAuthStore } from "@store/auth.store";
 
 const AccountMenu = () => {
+
+    const logout = useAuthStore((state) => state.logout);
+
+    const handleLogout = () => {
+        logout();
+    };
 
     return (
         <div>
@@ -18,7 +25,11 @@ const AccountMenu = () => {
             <MenuItem icon={<Archive size={18} />} label="Archive" />
             <MenuItem icon={<Settings size={18} />} label="Administration" />
             <MenuItem icon={<Users size={18} />} label="Teams" />
-            <MenuItem icon={<LogOut size={18} />} label="Log out" />
+            <MenuItem 
+                icon={<LogOut size={18} />} 
+                label="Log out" 
+                onClick={handleLogout} 
+            />
         </div>
     )
 

@@ -1,13 +1,21 @@
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-// import Tooltip from '@mui/material/Tooltip';
 import CustomTooltip from '@components/common/Tooltip/CustomTooltip';
+import { useAuthStore } from '@store/auth.store'; // Import store để lấy thông tin user
 
 const AvatarMenu = (
   { handleClick, open }: {
     handleClick: (event: React.MouseEvent<HTMLElement>) => void,
     open: boolean
   }) => {
+
+  // 1. Lấy thông tin user hiện tại từ Zustand Store
+  const user = useAuthStore(state => state.user);
+
+  // 2. Xử lý hiển thị: Ưu tiên Avatar URL -> Chữ cái đầu tên -> Mặc định 'U'
+  const avatarUrl = user?.avatarUrl; 
+  const displayName = user?.fullName || "User";
+  const initial = displayName.charAt(0).toUpperCase();
 
   return (
     <CustomTooltip title="User Profile">
@@ -20,10 +28,18 @@ const AvatarMenu = (
         aria-expanded={open ? 'true' : undefined}
       >
         <Avatar
-          sx={{ width: 32, height: 32 }}
-          alt="Avatar"
-          src='https://scontent.fsgn5-8.fna.fbcdn.net/v/t39.30808-6/322451849_546725867349538_3870146970776579532_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=efb6e6&_nc_eui2=AeHh9wuAAvGUZtjus__Dwwb8kSmiwTITY7ORKaLBMhNjs2AICmBScn3Gmz155MtAXvkY_4mlQ4DupRk5yNk5Vlka&_nc_ohc=IPX6n3myZuEAX96mwZw&_nc_ht=scontent.fsgn5-8.fna&oh=00_AfDDYqBxA-v3pz_VWDDJfk07T5Y4SlUAxZ_d2vnufnWmWg&oe=65804553'
-        />
+          sx={{ 
+            width: 32, 
+            height: 32,
+            bgcolor: "#0073ea", // Màu nền xanh Monday khi chưa có ảnh
+            fontSize: "14px"
+          }}
+          alt={displayName}
+          src={avatarUrl} // XÓA URL CỨNG CỦA FACEBOOK Ở ĐÂY
+        >
+          {/* Nếu không có ảnh, hiển thị ký tự đầu */}
+          {!avatarUrl && initial}
+        </Avatar>
       </IconButton>
     </CustomTooltip>
   )
