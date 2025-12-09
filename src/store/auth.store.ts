@@ -1,80 +1,59 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { authApi } from "@apis/auth/authApi";
+import { create } from 'zustand';
+import { authApi } from '../apis/auth/authApi';
+import { userApi } from '../apis/user/userApi';
+import { type AuthState } from '../types/auth';
 
-interface AuthState {
-  user: any;
-  isAuthenticated: boolean;
-  isLoading: boolean;
+export const useAuthStore = create<AuthState>((set) => ({
+  isAuthenticated: false,
+  user: null,
+  isLoading: true, // Mặc định đang load để check session lúc khởi động
 
-  login: (email: string, password: string) => Promise<boolean>;
-  logout: () => Promise<void>;
-  checkAuth: () => Promise<void>; // Check Session (Cookie) còn hợp lệ không
-}
+  login: async (loginData) => {
+    try {
+      // 1. Gọi API Login (Server set Cookie)
+      await authApi.login(loginData);
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
-      isLoading: true, // Waiting for checkAuth on app start
+      // 2. Gọi API lấy thông tin User ngay lập tức
+      const userProfile = await userApi.getMe();
 
-      // Function to call API /me to check if the Cookie is still valid
-      checkAuth: async () => {
-        // set({ isLoading: true });
-        try {
-          // Call API to get user info. If the Cookie is valid, backend will return data.
-          const user = await authApi.getMe();
-          set({ user, isAuthenticated: true });
-        } catch (error) {
-          // If error (401), it means not logged in or cookie expired
-          set({ user: null, isAuthenticated: false });
-        } finally {
-          set({ isLoading: false });
-        }
-      },
-
-      login: async (email, password) => {
-        set({ isLoading: true });
-        try {
-          const res = await authApi.login(email, password);
-          // Backend set Cookie xong, ta chỉ cần lưu user info
-          set({
-            user: res.user, 
-            isAuthenticated: true,
-          });
-          return true;
-        } catch (err) {
-          console.error(err);
-          return false;
-        } finally {
-          set({ isLoading: false });
-        }
-      },
-
-      logout: async () => {
-        try {
-            // 1. Gọi Backend để xóa Cookie
-            await authApi.logout(); 
-        } catch (error) {
-            console.error("Logout API failed", error);
-        }
-        
-        // 2. Xóa state ở Frontend
-        set({ user: null, isAuthenticated: false });
-        localStorage.setItem("auth-store", JSON.stringify({ user: null, isAuthenticated: false }));
-        
-        // 3. Redirect về Login (dùng window.location để clear sạch bộ nhớ)
-        window.location.href = "/login";
-      },
-    }),
-    {
-      name: "auth-store",
-      // Chỉ lưu user info, không lưu trạng thái loading
-      partialize: (state) => ({ 
-        user: state.user, 
-        isAuthenticated: state.isAuthenticated 
-      }),
+      // 3. Cập nhật Store
+      set({ 
+        isAuthenticated: true, 
+        user: userProfile,
+        isLoading: false 
+      });
+    } catch (error) {
+      console.error("Login Failed:", error);
+      throw error; // Ném lỗi để UI hiển thị thông báo
     }
-  )
-);
+  },
+
+  logout: async () => {
+    try {
+      await authApi.logout();
+    } catch (error) {
+      console.warn("Logout error on server", error);
+    } finally {
+      // Luôn xóa state ở client dù server lỗi hay không
+      set({ isAuthenticated: false, user: null });
+      // Redirect về login sẽ được xử lý ở Router hoặc Component
+    }
+  },
+
+  checkSession: async () => {
+    try {
+      set({ isLoading: true });
+      // Gọi API /me. Nếu Cookie còn hạn -> Success. Hết hạn -> 401 Error
+      const userProfile = await userApi.getMe();
+      set({ 
+        isAuthenticated: true, 
+        user: userProfile 
+      });
+    } catch (error) {
+      // Nếu lỗi (401), coi như chưa đăng nhập
+      set({ isAuthenticated: false, user: null });
+    } finally {
+      set({ isLoading: false });
+    }
+  }
+}));

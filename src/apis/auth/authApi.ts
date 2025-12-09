@@ -1,22 +1,19 @@
-import { axiosClient } from "./axiosClient";
+import axiosClient from './axiosClient';
+import { type LoginRequest } from '../../types/auth';
 
 export const authApi = {
-  login: async (email: string, password: string) => {
-    const res = await axiosClient.post("/auth/login", { email, password });
-    return res.data;
+  login: (data: LoginRequest) => {
+    // Backend sẽ set Cookie tại đây, không cần return token
+    return axiosClient.post('/auth/login', data);
   },
 
-  refresh: async () => {
-    const res = await axiosClient.post("/auth/refresh-token");
-    return res.data;
+  logout: () => {
+    // Backend sẽ xóa Cookie
+    return axiosClient.post('/auth/logout');
   },
-
-  getMe: async () => {
-    const res = await axiosClient.get("/users/me");
-    return res.data;
-  },
-
-  logout: async () => {
-    return await axiosClient.post("/auth/logout");
+  
+  // API refresh token (nếu cần xử lý silent refresh sau này)
+  refreshToken: () => {
+    return axiosClient.post('/auth/refresh-token');
   }
 };
