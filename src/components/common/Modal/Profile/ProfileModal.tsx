@@ -25,8 +25,8 @@ import {
 import { SidebarItem } from "./components/SidebarItem";
 import { InfoRow } from "./components/InfoRow";
 import { DetailCard } from "./components/DetailCard";
-import { userService } from "@apis/user/userService";
-import type { UserProfile } from "../../../../types/user";
+import { userApi } from "@apis/user/userApi";
+import type { UserProfile } from "../../../../types/auth";
 
 type Props = {
   open: boolean;
@@ -41,7 +41,7 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
   useEffect(() => {
     if (open) {
       setLoading(true);
-      userService.getMyProfile()
+      userApi.getMe()
         .then((data) => setProfile(data))
         .catch((err) => console.error(err))
         .finally(() => setLoading(false));

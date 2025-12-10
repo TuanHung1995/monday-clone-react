@@ -1,7 +1,7 @@
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import CustomTooltip from '@components/common/Tooltip/CustomTooltip';
-import { useAuthStore } from '@store/auth.store'; // Import store để lấy thông tin user
+import { useAuthStore } from '@store/auth.store';
 
 const AvatarMenu = (
   { handleClick, open }: {
@@ -28,7 +28,7 @@ const AvatarMenu = (
         aria-expanded={open ? 'true' : undefined}
       >
         <Avatar
-          sx={{ 
+          sx={{
             width: 32, 
             height: 32,
             bgcolor: "#0073ea", // Màu nền xanh Monday khi chưa có ảnh
