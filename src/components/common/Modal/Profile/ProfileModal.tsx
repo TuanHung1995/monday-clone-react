@@ -3,8 +3,8 @@ import Dialog from "@mui/material/Dialog";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Box from "@mui/material/Box";
-import { 
-  User, BriefcaseBusiness, Bell, Globe, Lock, ListIndentIncrease 
+import {
+  User, BriefcaseBusiness, Bell, Globe, Lock, ListIndentIncrease
 } from "lucide-react";
 
 import { SidebarItem } from "./components/SidebarItem";
@@ -76,18 +76,18 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
       }}
     >
       <div className="flex h-full">
-        
+
         {/* --- LEFT SIDEBAR --- */}
         <div className="w-64 bg-[#202336] flex-shrink-0 flex flex-col border-r border-[#2f324e]">
           <div className="p-6 text-xl font-semibold text-white">Profile</div>
-          
+
           <div className="flex-1 overflow-y-auto">
             {TABS.map((tab) => (
               <div key={tab.id} onClick={() => setActiveTab(tab.id)}>
-                <SidebarItem 
-                    icon={tab.icon} 
-                    label={tab.label} 
-                    active={activeTab === tab.id} // Highlight tab đang chọn
+                <SidebarItem
+                  icon={tab.icon}
+                  label={tab.label}
+                  active={activeTab === tab.id} // Highlight tab đang chọn
                 />
               </div>
             ))}
@@ -96,7 +96,7 @@ const ProfileModal: React.FC<Props> = ({ open, onClose }) => {
 
         {/* --- RIGHT CONTENT --- */}
         <div className="flex-1 flex flex-col bg-[#181b34] relative overflow-y-auto custom-scrollbar">
-          
+
           <IconButton
             onClick={onClose}
             sx={{ position: "absolute", right: 16, top: 16, color: "gray", zIndex: 10 }}

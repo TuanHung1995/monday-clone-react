@@ -23,3 +23,9 @@ export interface AuthState {
   logout: () => Promise<void>;
   checkSession: () => Promise<void>; // Hàm kiểm tra phiên đăng nhập khi F5
 }
+
+export interface ChangePasswordRequest {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
