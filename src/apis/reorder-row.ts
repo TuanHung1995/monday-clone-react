@@ -1,11 +1,11 @@
-import type { Task } from "@api/mock-board-data-1";
+import type { ItemWithValues } from "@apis/work/boardTypes";
 
-export function reorderRows(tasks: Task[], oldIndex: number, newIndex: number) {
-  const newTasks = [...tasks];
-  const [moved] = newTasks.splice(oldIndex, 1);
-  newTasks.splice(newIndex, 0, moved);
+export function reorderRows(items: ItemWithValues[], oldIndex: number, newIndex: number) {
+  const newItems = [...items];
+  const [moved] = newItems.splice(oldIndex, 1);
+  newItems.splice(newIndex, 0, moved);
 
-  newTasks.forEach((t, i) => (t.order = i));
+  newItems.forEach((t, i) => (t.position = i));
 
-  return newTasks;
+  return newItems;
 }

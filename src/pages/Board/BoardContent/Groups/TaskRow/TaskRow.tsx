@@ -1,24 +1,21 @@
-import React from "react";
+// src/pages/Board/BoardContent/Groups/TaskRow/TaskRow.tsx
+import React from 'react';
+import Checkbox from '@mui/material/Checkbox';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { Task } from "@apis/mock-board-data-1";
-import Stack from "@mui/material/Stack";
-import { CircleUserRound } from "lucide-react";
+import type { ItemWithValues, ColumnResponse } from "@apis/work/boardTypes";
+import { StatusCell } from './StatusCell';
 
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import {
-  TASK_ELEMENT_BG_COLOR_DARK,
-  TASK_BORDER_COLOR_DARK,
-  GROUP_ELEMENT_HOVER_COLOR
-} from "@utils/constants";
-
-interface Props {
-  task: Task;
+interface TaskRowProps {
+  task: ItemWithValues;
   groupId: string;
+  groupColor: string;
+  columns: ColumnResponse[];
 }
 
-export default function TaskRow({ task, groupId }: Props) {
+export const TaskRow: React.FC<TaskRowProps> = ({ task, groupId, groupColor, columns }) => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: task.id,
     data: { type: "TASK", task, groupId },
@@ -27,112 +24,103 @@ export default function TaskRow({ task, groupId }: Props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
-  } as React.CSSProperties;
+    opacity: isDragging ? 0.4 : 1,
+  };
+
 
   return (
-    <Stack
+    <div 
       ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      style={{
-        ...style
-      }}
-      direction="row"
-      alignItems="center"
-      spacing={1}
-      sx={{
-        // borderBottom: "1px solid",
-        borderColor: "grey.700",
-        bgcolor: TASK_ELEMENT_BG_COLOR_DARK,
-        color: "grey.300",
-        fontWeight: 500,
-        // px: 1,
-        // py: 0.5,
-        "&:hover": { backgroundColor: "grey.900" },
-      }}
+      style={style}
+      className="flex items-stretch min-h-[36px] bg-[#2f324e] hover:bg-[#133774] border-b border-[#4b4e69] transition-colors group relative"
     >
-      <Box sx={{ minWidth: 150, 
-        borderTop: `1px solid ${TASK_BORDER_COLOR_DARK}`, 
-            borderRight: `1px solid ${TASK_BORDER_COLOR_DARK}`, }}>
-        <Typography variant="body2">{task.name}</Typography>
-      </Box>
-      {task.values && Object.entries(task.values).map(([colId, val], idx) => {
-        // For simplicity, assuming column type based on colId
-        const columnType = colId === "col-1" ? "status" : colId === "col-2" ? "date" : colId === "col-3" ? "person" : "text";
-        switch (columnType) {
-          case "status":
-            return (
-              <Box key={idx} sx={{
-                minWidth: 150, backgroundColor: val, textAlign: "center",
-                borderTop: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-                borderRight: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-              }}>
-                <Typography variant="body2">
-                  {val}
-                </Typography>
-              </Box>
-            );
-          case "date":
-            return (
-              <Box key={idx} sx={{
-                minWidth: 150,
-                borderTop: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-                borderRight: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-              }}>
-                <Typography variant="body2">
-                  {val}
-                </Typography>
-              </Box>
-            );
-          case "person":
-            return (
-              <Box key={idx} sx={{
-                flex: 1, minWidth: 150, textAlign: "center",
-                borderTop: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-                borderRight: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-              }}>
-                <CircleUserRound className="w-6 h-6 mx-auto text-gray-400" />
-              </Box>
-            );
-          // case "file":
-          //   return (
-          //     <Box key={idx} sx={{ minWidth: 150, textAlign:, "center", cursor: "pointer"
-          // borderTop: `1px solid ${TASK_BORDER_COLOR_DARK}`, 
-          //     borderRight: `1px solid ${TASK_BORDER_COLOR_DARK}`, }}>
-          //       {col.value && <FileCheck2 className="w-5 h-5 mx-auto text-gray-400" />}
-          //     </Box>
-          //   );
-          case "text":
-            return (
-              <Box key={idx} sx={{
-                minWidth: 150,
-                borderTop: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-                borderRight: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-              }}>
-                <Typography variant="body2">{val}</Typography>
-              </Box>
-            );
-          // case "number":
-          //   return (
-          //     <Box key={idx} sx={{ minWidth: 150, textAlign:, "center"
-          // borderTop: `1px solid ${TASK_BORDER_COLOR_DARK}`, 
-          //     borderRight: `1px solid ${TASK_BORDER_COLOR_DARK}`, }}>
-          //       <Typography variant="body2">{col.value}</Typography>
-          //     </Box>
-          //   );
-          default:
-            return (
-              <Box key={idx} sx={{
-                minWidth: 150,
-                borderTop: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-                borderRight: `1px solid ${TASK_BORDER_COLOR_DARK}`,
-              }}>
-                <Typography variant="body2"></Typography>
-              </Box>
-            );
+      {/* Drag handle */}
+      <div 
+        {...attributes} 
+        {...listeners} 
+        className="flex-[0_0_8px] flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-grab active:cursor-grabbing text-gray-400"
+      >
+        <DragIndicatorIcon sx={{ fontSize: 14 }} />
+      </div>
+
+      <div className="flex-[0_0_6px]" style={{ backgroundColor: groupColor }} />
+
+      <div className="flex-[0_0_40px] border-r border-[#4b4e69] flex items-center justify-center">
+        <Checkbox size="small" sx={{ padding: '4px', '& .MuiSvgIcon-root': { fontSize: 18, color: '#4b4e69' }, '&.Mui-checked .MuiSvgIcon-root': { color: '#0073ea' } }} />
+      </div>
+
+      <div className="flex-[1_1_250px] min-w-[250px] border-r border-[#4b4e69] flex items-center px-4 sticky left-[54px] z-10 bg-inherit cursor-pointer text-[13px] font-normal text-white">
+        <span className="truncate max-w-full hover:underline">{task.name}</span>
+      </div>
+
+      {/* Dynamic Trailing Columns */}
+      {columns.map((col) => {
+        const type = col.type;
+        const colValueObj = task.columnValues[col.id.toString()];
+        const cellValue = colValueObj?.textValue || colValueObj?.value || "";
+        // Match the same widths used in GroupHeader
+        const widthClass = 
+          type === "STATUS" || type === "PRIORITY" ? "flex-[0_0_140px]" :
+          type === "OWNER" || type === "DATE" ? "flex-[0_0_120px]" :
+          type === "FILES" ? "flex-[0_0_80px]" : "flex-[0_0_140px]";
+
+        if (type === "OWNER") {
+          return (
+            <div key={col.id} className={`${widthClass} border-r border-[#4b4e69] flex items-center justify-center`}>
+              <div className="w-7 h-7 rounded-full bg-[#00a254] flex items-center justify-center text-white text-[11px] font-medium tracking-wide">
+                {(cellValue || "JD").substring(0, 2).toUpperCase()}
+              </div>
+            </div>
+          );
         }
+        
+        if (type === "STATUS") {
+          return (
+            <StatusCell 
+              key={col.id} 
+              initialValue={cellValue} 
+              type="status" 
+              widthClass={widthClass} 
+              onChange={(newVal) => {
+                // In a real app, dispatch an action here. 
+                // We're just logging it for now since we rely on external data source.
+                console.log(`Update Task ${task.id} Status to ${newVal}`);
+              }} 
+            />
+          );
+        }
+
+        if (type === "PRIORITY") {
+          return (
+            <StatusCell 
+              key={col.id} 
+              initialValue={cellValue} 
+              type="priority" 
+              widthClass={widthClass} 
+              onChange={(newVal) => {
+                console.log(`Update Task ${task.id} Priority to ${newVal}`);
+              }} 
+            />
+          );
+        }
+
+        if (type === "FILES") {
+          return (
+            <div key={col.id} className={`${widthClass} border-r border-[#4b4e69] flex items-center justify-center gap-1 cursor-pointer hover:bg-[#133774]`}>
+              <InsertDriveFileOutlinedIcon sx={{ fontSize: 16 }} className="text-gray-300" />
+            </div>
+          );
+        }
+
+        // Generic fallback for any other custom column like "Date" or newly added ones
+        return (
+          <div key={col.id} className={`${widthClass} border-r border-[#4b4e69] flex items-center justify-center text-[13px] text-white`}>
+            {cellValue}
+          </div>
+        );
       })}
-    </Stack>
+
+      <div className="flex-[0_0_40px] bg-[#30324e] border-l border-[#4b4e69]" />
+    </div>
   );
-}
+};

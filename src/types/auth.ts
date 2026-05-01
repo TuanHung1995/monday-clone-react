@@ -17,15 +17,14 @@ export interface AuthState {
   isAuthenticated: boolean;
   user: UserProfile | null;
   isLoading: boolean;
-  
-  // Actions
+
   login: (data: LoginRequest) => Promise<void>;
   logout: () => Promise<void>;
-  checkSession: () => Promise<void>; // Hàm kiểm tra phiên đăng nhập khi F5
+  checkSession: () => Promise<void>;
 }
 
 export interface ChangePasswordRequest {
-  oldPassword: string;
+  currentPassword: string;
   newPassword: string;
   confirmNewPassword: string;
 }
