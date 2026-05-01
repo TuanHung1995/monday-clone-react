@@ -4,6 +4,9 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    global: 'window',
+  },
   plugins: [react({
     babel: {
       plugins: [['babel-plugin-react-compiler', { target: '19' }]],

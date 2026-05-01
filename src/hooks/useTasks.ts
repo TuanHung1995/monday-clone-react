@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getTasks, createTask, updateTaskOrder } from "@/api/boardApi";
+import { getTasks, createTask, updateTaskOrder } from "@api/boardApis";
 import { Task } from "@/types";
 
 export const useTasks = (groupId: string) => {

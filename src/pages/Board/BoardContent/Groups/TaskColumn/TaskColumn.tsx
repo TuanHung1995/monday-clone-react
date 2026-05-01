@@ -2,7 +2,7 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { Column } from "@apis/mock-board-data-1";
+import type { ColumnResponse } from "@apis/work/boardTypes";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@utils/constants";
 
 interface Props {
-  column: Column;
+  column: ColumnResponse;
   groupId?: string; // not used here but available
 }
 
@@ -58,7 +58,7 @@ export default function TaskColumn({ column }: Props) {
         <TextField
           variant="standard"
           // placeholder="+ Add task"
-          value={column.name}
+          value={column.title}
           InputProps={{
             disableUnderline: true,
             sx: {

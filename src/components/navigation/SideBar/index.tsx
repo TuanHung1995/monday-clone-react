@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-
-import { Link } from "react-router"
+import { Link } from "react-router-dom";
+import { getMyBoards } from "@apis/work/boardApi";
+import type { BoardResponse } from "@apis/work/boardTypes";
 
 import SidebarHeader from "./Header";
 import SidebarSection from "./Sections";
@@ -17,6 +19,14 @@ import {
 } from "lucide-react";
 
 const Sidebar = () => {
+  const [boards, setBoards] = useState<BoardResponse[]>([]);
+
+  useEffect(() => {
+    getMyBoards()
+      .then((data) => setBoards(data))
+      .catch((error) => console.error("Failed to load boards:", error));
+  }, []);
+
   return (
     <Box
       className="flex flex-col h-full w-64 bg-[#121b33] text-gray-300 py-3 px-2"
@@ -41,9 +51,11 @@ const Sidebar = () => {
 
         {/* Boards */}
         <div className="ml-6 mt-2 flex flex-col gap-1">
-          <Link to="/board">
-            <NavItem icon={<LayoutDashboard size={16} />} label="Tasks" />
-          </Link>
+          {boards.map((board) => (
+            <Link key={board.id} to={`/board/${board.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <NavItem icon={<LayoutDashboard size={16} />} label={board.name} />
+            </Link>
+          ))}
           <NavItem icon={<Folder size={16} />} label="Epics" />
           <NavItem icon={<Bug size={16} />} label="Bugs Queue" />
           <NavItem icon={<LayoutDashboard size={16} />} label="New Board" />

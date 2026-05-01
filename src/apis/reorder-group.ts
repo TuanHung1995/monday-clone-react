@@ -1,11 +1,11 @@
-import type { Group } from "@api/mock-board-data-1";
+import type { TaskGroupWithItems } from "@apis/work/boardTypes";
 
-export function reorderGroups(groups: Group[], oldIndex: number, newIndex: number) {
+export function reorderGroups(groups: TaskGroupWithItems[], oldIndex: number, newIndex: number) {
   const newGroups = [...groups];
   const [moved] = newGroups.splice(oldIndex, 1);
   newGroups.splice(newIndex, 0, moved);
 
-  newGroups.forEach((g, i) => (g.order = i));
+  newGroups.forEach((g, i) => (g.position = i));
 
   return newGroups;
 }
