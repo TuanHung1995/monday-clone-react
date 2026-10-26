@@ -1,13 +1,16 @@
-import { axiosClient } from "./axiosClient";
+import axiosClient from './axiosClient';
+import type { LoginRequest } from '../../types/auth';
 
 export const authApi = {
-  login: async (email: string, password: string) => {
-    const res = await axiosClient.post("/auth/login", { email, password });
-    return res.data;
+  login: (data: LoginRequest) => {
+    return axiosClient.post('/auth/login', data);
   },
 
-  refresh: async () => {
-    const res = await axiosClient.post("/auth/refresh");
-    return res.data;
+  logout: () => {
+    return axiosClient.post('/auth/logout');
   },
+  
+  refreshToken: () => {
+    return axiosClient.post('/auth/refresh-token');
+  }
 };

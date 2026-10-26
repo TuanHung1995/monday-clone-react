@@ -1,4 +1,4 @@
-// import type { Column, Task } from "@api/mock-board-data-1";
+// import type { Column, Task } from "@types/board";
 
 // export function reorderColumns(
 //   columns: Column[],

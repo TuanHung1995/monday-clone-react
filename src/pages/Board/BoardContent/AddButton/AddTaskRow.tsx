@@ -6,7 +6,7 @@ import { TOP_BOTTOM_COLUMN_COLOR, TASK_BORDER_COLOR_DARK } from "@utils/constant
 import { INDIGO } from "@utils/constants/colors/picker";
 
 interface AddTaskRowProps {
-  groupId: number;
+  groupId: string;
 }
 
 const AddTaskRow = ({ groupId }: AddTaskRowProps) => {

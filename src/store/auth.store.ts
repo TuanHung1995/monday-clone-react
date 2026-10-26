@@ -1,69 +1,59 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { authApi } from "@apis/auth/authApi";
+import { create } from 'zustand';
+import { authApi } from '../apis/auth/authApi';
+import { userApi } from '../apis/user/userApi';
+import { type AuthState } from '../types/auth';
 
-interface AuthState {
-  user: any;
-  accessToken: string | null;
-  refreshToken: string | null;
-  isAuthenticated: boolean;
+export const useAuthStore = create<AuthState>((set) => ({
+  isAuthenticated: false,
+  user: null,
+  isLoading: true, // Mặc định đang load để check session lúc khởi động
 
-  login: (email: string, password: string) => Promise<boolean>;
-  logout: () => void;
-  refreshTokenSilently: () => Promise<boolean>;
-}
+  login: async (loginData) => {
+    try {
+      // 1. Gọi API Login (Server set Cookie)
+      await authApi.login(loginData);
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set, get) => ({
-      user: null,
-      accessToken: null,
-      refreshToken: null,
-      isAuthenticated: false,
+      // 2. Gọi API lấy thông tin User ngay lập tức
+      const userProfile = await userApi.getMe();
 
-      login: async (email, password) => {
-        try {
-          const res = await authApi.login(email, password);
-
-          set({
-            user: res.user,
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken,
-            isAuthenticated: true,
-          });
-
-          return true;
-        } catch (err) {
-          return false;
-        }
-      },
-
-      logout: () => {
-        set({
-          user: null,
-          accessToken: null,
-          refreshToken: null,
-          isAuthenticated: false,
-        });
-      },
-
-      refreshTokenSilently: async () => {
-        try {
-          const res = await authApi.refresh();
-
-          set({
-            accessToken: res.accessToken,
-            refreshToken: res.refreshToken,
-          });
-
-          return true;
-        } catch (e) {
-          return false;
-        }
-      },
-    }),
-    {
-      name: "auth-store",
+      // 3. Cập nhật Store
+      set({ 
+        isAuthenticated: true, 
+        user: userProfile,
+        isLoading: false 
+      });
+    } catch (error) {
+      console.error("Login Failed:", error);
+      throw error; // Ném lỗi để UI hiển thị thông báo
     }
-  )
-);
+  },
+
+  logout: async () => {
+    try {
+      await authApi.logout();
+    } catch (error) {
+      console.warn("Logout error on server", error);
+    } finally {
+      // Luôn xóa state ở client dù server lỗi hay không
+      set({ isAuthenticated: false, user: null });
+      // Redirect về login sẽ được xử lý ở Router hoặc Component
+    }
+  },
+
+  checkSession: async () => {
+    try {
+      set({ isLoading: true });
+      // Gọi API /me. Nếu Cookie còn hạn -> Success. Hết hạn -> 401 Error
+      const userProfile = await userApi.getMe();
+      set({ 
+        isAuthenticated: true, 
+        user: userProfile 
+      });
+    } catch (error) {
+      // Nếu lỗi (401), coi như chưa đăng nhập
+      set({ isAuthenticated: false, user: null });
+    } finally {
+      set({ isLoading: false });
+    }
+  }
+}));

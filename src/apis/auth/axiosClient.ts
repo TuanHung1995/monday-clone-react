@@ -1,43 +1,26 @@
 import axios from "axios";
-import { useAuthStore } from "@store/auth.store";
 
-export const axiosClient = axios.create({
-  // baseURL: import.meta.env.VITE_API_URL,
-  // withCredentials: true, // nếu dùng httpOnly cookies
-  baseURL: "http://localhost:8080",
-});
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:1122/api/v2";
 
-axiosClient.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().accessToken;
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+const axiosClient = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
+  timeout: 10000,
 });
 
 axiosClient.interceptors.response.use(
-  (res) => res,
-  async (error) => {
-    const original = error.config;
-
-    if (error.response?.status === 401 && !original._retry) {
-      original._retry = true;
-
-      try {
-        const refresh = await useAuthStore
-          .getState()
-          .refreshTokenSilently();
-
-        if (refresh) {
-          return axiosClient(original);
-        }
-      } catch (_) {
-        useAuthStore.getState().logout();
-        window.location.href = "/login";
-      }
-    }
+  (response) => {
+    return response.data;
+  },
+  (error) => {
+    const message = error.response?.data?.message || 'Có lỗi xảy ra';
+    console.error(`API Error: ${message}`, error);
 
     return Promise.reject(error);
   }
 );
+
+export default axiosClient;

@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { DragEndEvent } from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
 
 interface UseDnDProps {
   onColumnReorder: (ids: string[]) => void;

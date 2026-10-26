@@ -1,52 +1,69 @@
-import { useState } from "react";
-import { useAuthStore } from "@store/auth.store";
-import { useNavigate, useLocation } from "react-router-dom";
-import { loginService } from "@services/api/auth/loginService";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/auth.store';
+import { Box, Button, TextField, Typography, Alert } from '@mui/material';
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Login = () => {
+  const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setIsSubmitting(true);
+
     try {
-      const data = await loginService(email, password);
-
-      // Lưu token mock
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      localStorage.setItem("user", JSON.stringify(data.user));
-
-      alert("Login success (mock)!");
-      window.location.href = "/home";
-    } catch (e) {
-      alert("Login failed");
+      await login({ email, password });
+      navigate('/'); 
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="flex flex-col w-80 gap-4 mx-auto mt-20">
-      <h1 className="text-xl font-semibold">Login (Mocked)</h1>
+    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 10, p: 3, boxShadow: 3, borderRadius: 2 }}>
+      <Typography variant="h5" mb={3} textAlign="center">Đăng Nhập</Typography>
+      
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
 
-      <input
-        type="email"
-        placeholder="Email"
-        className="border p-2 rounded"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      <input
-        type="password"
-        placeholder="Password"
-        className="border p-2 rounded"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <button
-        onClick={handleLogin}
-        className="bg-blue-600 text-white p-2 rounded"
-      >
-        Login
-      </button>
-    </div>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Email"
+          fullWidth
+          margin="normal"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <TextField
+          label="Mật khẩu"
+          type="password"
+          fullWidth
+          margin="normal"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        
+        <Button 
+          type="submit" 
+          variant="contained" 
+          fullWidth 
+          sx={{ mt: 2 }}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Đang xử lý...' : 'Đăng nhập'}
+        </Button>
+      </form>
+    </Box>
   );
-}
+};
+
+export default Login;
